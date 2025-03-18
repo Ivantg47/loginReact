@@ -1,6 +1,6 @@
 import { RegistroUsuario } from "./RegistroUsuario"
 
-export const ListaUsuarios = ( { controladorEliminarUsuario, usuarios }) => {
+export const ListaUsuarios = ( { controladorUsuarioSeleccionadoForm, controladorEliminarUsuario, usuarios }) => {
     
     return (
         <>
@@ -16,9 +16,14 @@ export const ListaUsuarios = ( { controladorEliminarUsuario, usuarios }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {                        
                         usuarios.map(user => (
-                            <RegistroUsuario controladorEliminarUsuario={ controladorEliminarUsuario } key={user.id} user={ user } />
+                            <RegistroUsuario 
+                                controladorUsuarioSeleccionadoForm={ controladorUsuarioSeleccionadoForm }
+                                controladorEliminarUsuario={ controladorEliminarUsuario } 
+                                key={user.id} 
+                                user={ user } 
+                            />
                         ))
                     }
                 </tbody>

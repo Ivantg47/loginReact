@@ -1,15 +1,17 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Swal from "sweetalert2"
 
-const initFormUsuario = {
-    usuario: '',
-    pass: '',
-    correo: ''
-}
-
-export const FormUsuario = ({ controladorAgregarUsuario }) => {
+export const FormUsuario = ({ initFormUsuario, controladorAgregarUsuario, usuarioSeleccionado, controladorCerrarForm }) => {
 
     const [formUsuario, setFormUsuario] = useState(initFormUsuario)
-    const { usuario, pass, correo } = formUsuario
+    const { id, usuario, pass, correo } = formUsuario
+
+    useEffect(() => {
+        setFormUsuario({
+            ...usuarioSeleccionado,
+            pass: ''
+        })
+    }, [usuarioSeleccionado])
 
     const onIputChange = ({ target: { name, value } }) => {
         setFormUsuario({
@@ -20,38 +22,68 @@ export const FormUsuario = ({ controladorAgregarUsuario }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if(!usuario || !pass || !correo) return
+        if (!usuario || (!pass && id === 0) || !correo) {
+            Swal.fire(
+                'Error de validacion',
+                'Debe llenar todos los campos del formulario',
+                "error"
+            );
+
+            return
+        }
+
         controladorAgregarUsuario(formUsuario)
         setFormUsuario(initFormUsuario)
     }
-    
+
+    const onCerrarForm = () => {
+        controladorCerrarForm()
+        setFormUsuario(initFormUsuario)
+    }
+
     return (
-        <form onSubmit={ onSubmit }>
-            <input 
-                className="form-control my-3 w-75" 
-                placeholder="usuario" 
-                name="usuario" 
+        <form onSubmit={onSubmit}>
+            <input
+                className="form-control my-3 w-75"
+                placeholder="usuario"
+                name="usuario"
                 type="text"
-                value={ usuario }
-                onChange={ onIputChange }
+                value={usuario}
+                onChange={onIputChange}
             />
-            <input 
-                className="form-control my-3 w-75" 
-                placeholder="contraseña" 
-                name="pass" 
+            {id > 0 || <input
+                className="form-control my-3 w-75"
+                placeholder="contraseña"
+                name="pass"
                 type="password"
-                value={ pass }
-                onChange={ onIputChange }
-            />
-            <input 
-                className="form-control my-3 w-75" 
-                placeholder="correo" 
-                name="correo" 
+                value={pass}
+                onChange={onIputChange}
+            />}
+            <input
+                className="form-control my-3 w-75"
+                placeholder="correo"
+                name="correo"
                 type="text"
-                value={ correo }
-                onChange={ onIputChange }
+                value={correo}
+                onChange={onIputChange}
             />
-            <button className="btn btn-primary" type="submit">Crear</button>
+            <input
+                name="id"
+                type="hidden"
+                value={id}
+            />
+            <button
+                className="btn btn-primary"
+                type="submit">
+                {id > 0 ? 'Editar' : 'Crear'}
+            </button>
+
+            <button
+                type="button"
+                className="btn btn-secondary mx-2"
+                onClick={onCerrarForm}>
+                Cerrar
+            </button>
         </form>
     )
 }

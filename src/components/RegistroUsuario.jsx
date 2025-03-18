@@ -1,22 +1,25 @@
-export const RegistroUsuario = ({ controladorEliminarUsuario, user }) => {
+export const RegistroUsuario = ({ controladorUsuarioSeleccionadoForm, controladorEliminarUsuario, user }) => {
     
-    const onEliminar = (id) => {
-        controladorEliminarUsuario(id)
-    }
+    const { id, usuario, correo } = user
 
     return (
         <tr>
-            <td>{user.id}</td>
-            <td>{user.usuario}</td>
-            <td>{user.correo}</td>
+            <td>{id}</td>
+            <td>{usuario}</td>
+            <td>{correo}</td>
             <td>
-                <button className="btn btn-secondary btn-sm">
+                <button className="btn btn-secondary btn-sm"
+                    onClick={ () => controladorUsuarioSeleccionadoForm({
+                        id,
+                        usuario,
+                        correo
+                    }) }>
                     actualizar
                 </button>
             </td>
             <td>
                 <button className="btn btn-danger btn-sm"
-                    onClick={ () => onEliminar(user.id) }>
+                    onClick={ () => controladorEliminarUsuario(id) }>
                     eliminar
                 </button>
             </td>

@@ -1,47 +1,53 @@
-import { useReducer } from "react"
-import { FormUsuario } from "./components/FormUsuario"
 import { ListaUsuarios } from "./components/ListaUsuarios"
-import { usuarioReducer } from "./reducers/usuarioReducer"
-
-const inicioUsuario = [
-    {
-        id: 1,
-        usuario: 'pepe',
-        pass: '123',
-        correo: 'pepe@correo.com'
-    }
-]
+import { ModalFormUsuario } from "./components/ModalFormUsuario"
+import { useUsuarios } from "./hooks/useUsuarios"
 
 export const UsuariosApp = () => {
 
-    const [usuarios, dispatch] = useReducer(usuarioReducer, inicioUsuario)
+    const {
 
-    const controladorAgregarUsuario = (usuario) => {
-        dispatch({
-            type: 'agregar',
-            payload: usuario
-        })
-    }
+        usuarios,
+        usuarioSeleccionado,
+        initFormUsuario,
+        formVisible,
+        controladorAgregarUsuario,
+        controladorEliminarUsuario,
+        controladorUsuarioSeleccionadoForm,
+        controladorAbrirForm,
+        controladorCerrarForm
 
-    const controladorEliminarUsuario = (id) => {
-        dispatch({
-            type: 'eliminar',
-            payload: id
-        })
-    }
+    } = useUsuarios()
 
-    return (<div className="container my-4">
-        <h2>Usuarios App</h2>
-        <div className="row">
-            <div className="col">
-                { usuarios.length === 0 ?
-                    <div className="alert alert-warning">No hay usuarios registrados</div> 
-                 : <ListaUsuarios controladorEliminarUsuario={ controladorEliminarUsuario } usuarios={ usuarios }/>
-                }
+    return (
+        <>
+            {!formVisible || <ModalFormUsuario 
+                initFormUsuario={ initFormUsuario }
+                controladorAgregarUsuario={ controladorAgregarUsuario }
+                usuarioSeleccionado={ usuarioSeleccionado }
+                controladorCerrarForm={ controladorCerrarForm }
+            />}
+
+            <div className="container my-4">
+                <h2>Usuarios App</h2>
+                <div className="row">
+                    <div className="col">
+                        {formVisible || <button
+                            className="btn btn-primary my-2"
+                            onClick={controladorAbrirForm}>
+                            Nuevo Usuario
+                        </button>}
+
+                        {usuarios.length === 0 ?
+                            <div className="alert alert-warning">No hay usuarios registrados</div>
+                            : <ListaUsuarios
+                                controladorUsuarioSeleccionadoForm={controladorUsuarioSeleccionadoForm}
+                                controladorEliminarUsuario={controladorEliminarUsuario}
+                                usuarios={usuarios}
+                            />
+                        }
+                    </div>
+                </div>
             </div>
-            <div className="col">
-                <FormUsuario controladorAgregarUsuario={ controladorAgregarUsuario }/>
-            </div>
-        </div>
-    </div>)
+        </>
+    )
 }
