@@ -1,7 +1,10 @@
+import { useContext } from "react"
 import { NavLink } from "react-router-dom"
+import { UsuarioContext } from "../context/UsuarioContext"
 
-export const RegistroUsuario = ({ controladorUsuarioSeleccionadoForm, controladorEliminarUsuario, user }) => {
+export const RegistroUsuario = ({ user }) => {
     
+    const { controladorUsuarioSeleccionadoForm, controladorEliminarUsuario } = useContext(UsuarioContext)
     const { id, usuario, correo } = user
 
     return (

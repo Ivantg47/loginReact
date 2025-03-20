@@ -1,26 +1,19 @@
+import { useContext } from "react"
 import { ListaUsuarios } from "../components/ListaUsuarios"
 import { ModalFormUsuario } from "../components/ModalFormUsuario"
+import { UsuarioContext } from "../context/UsuarioContext"
 
-export const PaginaUsuarios = ( {
-    usuarios,
-    usuarioSeleccionado,
-    initFormUsuario,
-    formVisible,
-    controladorAgregarUsuario,
-    controladorEliminarUsuario,
-    controladorUsuarioSeleccionadoForm,
-    controladorAbrirForm,
-    controladorCerrarForm
-}) => {
+export const PaginaUsuarios = () => {
+
+    const {
+        usuarios,
+        formVisible,
+        controladorAbrirForm
+    } = useContext(UsuarioContext)
 
     return (
         <>
-            {!formVisible || <ModalFormUsuario 
-                initFormUsuario={ initFormUsuario }
-                controladorAgregarUsuario={ controladorAgregarUsuario }
-                usuarioSeleccionado={ usuarioSeleccionado }
-                controladorCerrarForm={ controladorCerrarForm }
-            />}
+            {!formVisible || <ModalFormUsuario />}
 
             <div className="container my-4">
                 <h2>Usuarios App</h2>
@@ -34,11 +27,7 @@ export const PaginaUsuarios = ( {
 
                         {usuarios.length === 0 ?
                             <div className="alert alert-warning">No hay usuarios registrados</div>
-                            : <ListaUsuarios
-                                controladorUsuarioSeleccionadoForm={controladorUsuarioSeleccionadoForm}
-                                controladorEliminarUsuario={controladorEliminarUsuario}
-                                usuarios={usuarios}
-                            />
+                            : <ListaUsuarios />
                         }
                     </div>
                 </div>

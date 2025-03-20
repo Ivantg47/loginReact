@@ -1,13 +1,15 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Swal from "sweetalert2"
+import { AuthContext } from "../context/AuthContext"
 
 const initForm = {
     usuario: '',
     pass: ''
 }
 
-export const PaginaAcceso = ({controladorAcceso}) => {
+export const PaginaAcceso = () => {
 
+    const { controladorAcceso } = useContext(AuthContext)
     const [formAcceso, setFormAcceso] = useState(initForm)
     const { usuario, pass } = formAcceso
 

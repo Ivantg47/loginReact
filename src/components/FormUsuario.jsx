@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Swal from "sweetalert2"
+import { UsuarioContext } from "../context/UsuarioContext"
 
-export const FormUsuario = ({ initFormUsuario, controladorAgregarUsuario, usuarioSeleccionado, controladorCerrarForm }) => {
+export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
 
+    const { initFormUsuario, controladorAgregarUsuario } = useContext(UsuarioContext)
     const [formUsuario, setFormUsuario] = useState(initFormUsuario)
     const { id, usuario, pass, correo } = formUsuario
 

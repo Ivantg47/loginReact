@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { FormUsuario } from "../components/FormUsuario"
 import { useParams } from "react-router-dom"
+import { UsuarioContext } from "../context/UsuarioContext"
 
-export const PaginaRegistro = ({ usuarios=[], initFormUsuario, controladorAgregarUsuario }) => {
+export const PaginaRegistro = () => {
 
+    const { usuarios=[], initFormUsuario } = useContext(UsuarioContext)
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(initFormUsuario)
     const { id } = useParams()
     
@@ -20,8 +22,6 @@ export const PaginaRegistro = ({ usuarios=[], initFormUsuario, controladorAgrega
             <div className="row">
                 <div className="col">
                     <FormUsuario 
-                        initFormUsuario={ initFormUsuario } 
-                        controladorAgregarUsuario={ controladorAgregarUsuario }
                         usuarioSeleccionado={ usuarioSeleccionado }/>
                 </div>
             </div>

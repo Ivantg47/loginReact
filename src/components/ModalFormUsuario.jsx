@@ -1,6 +1,11 @@
+import { useContext } from "react"
 import { FormUsuario } from "./FormUsuario"
+import { UsuarioContext } from "../context/UsuarioContext"
 
-export const ModalFormUsuario = ({ initFormUsuario, controladorAgregarUsuario, usuarioSeleccionado, controladorCerrarForm }) => {
+export const ModalFormUsuario = () => {
+
+    const { usuarioSeleccionado, controladorCerrarForm } = useContext(UsuarioContext)
+
     return (
         <div className="abrir-modal animacion fadeIn">
             <div className="modal" style={{ display: "block" }} tabIndex="-1">
@@ -13,8 +18,6 @@ export const ModalFormUsuario = ({ initFormUsuario, controladorAgregarUsuario, u
                         </div>
                         <div className="modal-body">
                             <FormUsuario
-                                initFormUsuario={initFormUsuario}
-                                controladorAgregarUsuario={controladorAgregarUsuario}
                                 usuarioSeleccionado={usuarioSeleccionado}
                                 controladorCerrarForm={controladorCerrarForm}
                             />

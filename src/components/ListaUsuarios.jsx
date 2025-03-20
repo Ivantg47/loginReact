@@ -1,7 +1,10 @@
+import { useContext } from "react"
 import { RegistroUsuario } from "./RegistroUsuario"
+import { UsuarioContext } from "../context/UsuarioContext"
 
-export const ListaUsuarios = ( { controladorUsuarioSeleccionadoForm, controladorEliminarUsuario, usuarios }) => {
+export const ListaUsuarios = () => {
     
+    const { usuarios } = useContext(UsuarioContext)
     return (
         <>
             <p>Lista de Usuarios</p>
@@ -20,8 +23,6 @@ export const ListaUsuarios = ( { controladorUsuarioSeleccionadoForm, controlador
                     {                        
                         usuarios.map(user => (
                             <RegistroUsuario 
-                                controladorUsuarioSeleccionadoForm={ controladorUsuarioSeleccionadoForm }
-                                controladorEliminarUsuario={ controladorEliminarUsuario } 
                                 key={user.id} 
                                 user={ user } 
                             />

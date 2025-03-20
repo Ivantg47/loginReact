@@ -1,7 +1,11 @@
+import { useContext } from "react"
 import { NavLink } from "react-router-dom"
+import { AuthContext } from "../auth/context/AuthContext"
 
-export const Navbar = ({ user, controladorCerrar }) => {
+export const Navbar = () => {
     
+    const { acceso:{user}, controladorCerrar } = useContext(AuthContext)
+
     return (<>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
