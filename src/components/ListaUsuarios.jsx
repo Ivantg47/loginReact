@@ -12,6 +12,7 @@ export const ListaUsuarios = ( { controladorUsuarioSeleccionadoForm, controlador
                         <th>Usuario</th>
                         <th>Correo</th>
                         <th>Actualizar</th>
+                        <th>Actualizar 2</th>
                         <th>Eliminar</th>
                     </tr>
                 </thead>

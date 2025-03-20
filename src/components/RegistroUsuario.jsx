@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom"
+
 export const RegistroUsuario = ({ controladorUsuarioSeleccionadoForm, controladorEliminarUsuario, user }) => {
     
     const { id, usuario, correo } = user
@@ -16,6 +18,11 @@ export const RegistroUsuario = ({ controladorUsuarioSeleccionadoForm, controlado
                     }) }>
                     actualizar
                 </button>
+            </td>
+            <td>
+             <NavLink className={'btn btn-secondary btn-sm'} to={'/usuarios/editar/' + id}>
+                actualizar 2
+             </NavLink>
             </td>
             <td>
                 <button className="btn btn-danger btn-sm"

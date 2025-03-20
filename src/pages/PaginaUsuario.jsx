@@ -1,22 +1,17 @@
 import { ListaUsuarios } from "../components/ListaUsuarios"
 import { ModalFormUsuario } from "../components/ModalFormUsuario"
-import { useUsuarios } from "../hooks/useUsuarios"
 
-export const PaginaUsuarios = () => {
-
-    const {
-
-        usuarios,
-        usuarioSeleccionado,
-        initFormUsuario,
-        formVisible,
-        controladorAgregarUsuario,
-        controladorEliminarUsuario,
-        controladorUsuarioSeleccionadoForm,
-        controladorAbrirForm,
-        controladorCerrarForm
-
-    } = useUsuarios()
+export const PaginaUsuarios = ( {
+    usuarios,
+    usuarioSeleccionado,
+    initFormUsuario,
+    formVisible,
+    controladorAgregarUsuario,
+    controladorEliminarUsuario,
+    controladorUsuarioSeleccionadoForm,
+    controladorAbrirForm,
+    controladorCerrarForm
+}) => {
 
     return (
         <>

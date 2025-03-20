@@ -78,12 +78,12 @@ export const FormUsuario = ({ initFormUsuario, controladorAgregarUsuario, usuari
                 {id > 0 ? 'Editar' : 'Crear'}
             </button>
 
-            <button
+            {!controladorCerrarForm || <button
                 type="button"
                 className="btn btn-secondary mx-2"
                 onClick={onCerrarForm}>
                 Cerrar
-            </button>
+            </button>}
         </form>
     )
 }

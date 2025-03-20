@@ -11,9 +11,14 @@ export const Navbar = ({ user, controladorCerrar }) => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
-                        <li className="nav-iteam">
+                        <li>
                             <NavLink className="nav-link" to="/usuarios">
                                 Usuarios
+                            </NavLink>
+                        </li>
+                        <li className="nav-iteam">
+                            <NavLink className="nav-link" to="/usuarios/registro">
+                                Registrar Usuario
                             </NavLink>
                         </li>
                     </ul>
