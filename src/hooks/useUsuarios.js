@@ -2,20 +2,16 @@ import { useReducer, useState } from "react"
 import { usuarioReducer } from "../reducers/usuarioReducer"
 import Swal from "sweetalert2"
 import { useNavigate } from "react-router-dom"
+import { actualizarUsuario, agregarUsuario, eliminarUsuario, listarUsuarios } from "../services/usuarioService"
 
-const inicioUsuario = [{
-    id: 1,
-    usuario: 'pepe',
-    pass: '123',
-    correo: 'pepe@correo.com'
-}]
+const inicioUsuario = []
 
-const initFormUsuario = {
+const initFormUsuario = [{
     id: 0,
     usuario: '',
     pass: '',
     correo: ''
-}
+}]
 
 export const useUsuarios = () => {
 
@@ -24,11 +20,35 @@ export const useUsuarios = () => {
     const [formVisible, setFormVisible] = useState(false)
     const navigate = useNavigate()
 
-    const controladorAgregarUsuario = (usuario) => {
+    const getUsuarios = async () => {
+        try {
+            const response = await listarUsuarios()
+            
+            dispatch({
+                type: 'cargaUsuarios',
+                payload: response.data
+            })
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const controladorAgregarUsuario = async (usuario) => {
+
+        let response = null
+        console.log(usuario);
+        console.log(usuario.id);
+        
+        if (usuario.id === 0) {
+            response = await agregarUsuario(usuario)
+        } else {
+            response = await actualizarUsuario(usuario)
+        }
 
         dispatch({
             type: (usuario.id === 0) ? 'agregar' : 'actualizar',
-            payload: usuario
+            payload: response.data
         })
 
         Swal.fire(
@@ -53,6 +73,7 @@ export const useUsuarios = () => {
             confirmButtonText: "Si, eliminar"
         }).then((result) => {
             if (result.isConfirmed) {
+                eliminarUsuario(id)
                 dispatch({
                     type: 'eliminar',
                     payload: id
@@ -92,6 +113,7 @@ export const useUsuarios = () => {
         controladorEliminarUsuario,
         controladorUsuarioSeleccionadoForm,
         controladorAbrirForm,
-        controladorCerrarForm
+        controladorCerrarForm,
+        getUsuarios
     }
 }

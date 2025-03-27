@@ -12,7 +12,8 @@ export const UsuarioProvider = ({children}) => {
         controladorEliminarUsuario,
         controladorUsuarioSeleccionadoForm,
         controladorAbrirForm,
-        controladorCerrarForm
+        controladorCerrarForm,
+        getUsuarios
     } = useUsuarios()
 
     return (
@@ -26,7 +27,8 @@ export const UsuarioProvider = ({children}) => {
                 controladorEliminarUsuario,
                 controladorUsuarioSeleccionadoForm,
                 controladorAbrirForm,
-                controladorCerrarForm
+                controladorCerrarForm,
+                getUsuarios
             }
         }>
             {children}
