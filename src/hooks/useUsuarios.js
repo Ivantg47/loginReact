@@ -6,12 +6,12 @@ import { actualizarUsuario, agregarUsuario, eliminarUsuario, listarUsuarios } fr
 
 const inicioUsuario = []
 
-const initFormUsuario = [{
+const initFormUsuario = {
     id: 0,
     usuario: '',
     pass: '',
     correo: ''
-}]
+}
 
 export const useUsuarios = () => {
 
@@ -37,8 +37,6 @@ export const useUsuarios = () => {
     const controladorAgregarUsuario = async (usuario) => {
 
         let response = null
-        console.log(usuario);
-        console.log(usuario.id);
         
         if (usuario.id === 0) {
             response = await agregarUsuario(usuario)

@@ -7,7 +7,7 @@ export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
     const { initFormUsuario, controladorAgregarUsuario } = useContext(UsuarioContext)
     const [formUsuario, setFormUsuario] = useState(initFormUsuario)
     const { id, usuario, pass, correo } = formUsuario
-
+    
     useEffect(() => {
         setFormUsuario({
             ...usuarioSeleccionado,
@@ -33,7 +33,8 @@ export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
 
             return
         }
-
+        console.log('-----');
+        console.log(formUsuario);    
         controladorAgregarUsuario(formUsuario)
         setFormUsuario(initFormUsuario)
     }
