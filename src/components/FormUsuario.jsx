@@ -4,7 +4,7 @@ import { UsuarioContext } from "../context/UsuarioContext"
 
 export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
 
-    const { initFormUsuario, controladorAgregarUsuario } = useContext(UsuarioContext)
+    const { initFormUsuario, controladorAgregarUsuario, errors } = useContext(UsuarioContext)
     const [formUsuario, setFormUsuario] = useState(initFormUsuario)
     const { id, usuario, pass, correo } = formUsuario
     
@@ -24,19 +24,16 @@ export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!usuario || (!pass && id === 0) || !correo) {
-            Swal.fire(
-                'Error de validacion',
-                'Debe llenar todos los campos del formulario',
-                "error"
-            );
+        // if (!usuario || (!pass && id === 0) || !correo) {
+        //     Swal.fire(
+        //         'Error de validacion',
+        //         'Debe llenar todos los campos del formulario',
+        //         "error"
+        //     );
 
-            return
-        }
-        console.log('-----');
-        console.log(formUsuario);    
+        //     return
+        // }
         controladorAgregarUsuario(formUsuario)
-        setFormUsuario(initFormUsuario)
     }
 
     const onCerrarForm = () => {
@@ -54,6 +51,7 @@ export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
                 value={usuario}
                 onChange={onIputChange}
             />
+            <p className="text-danger">{ errors?.usuario }</p>
             {id > 0 || <input
                 className="form-control my-3 w-75"
                 placeholder="contraseña"
@@ -62,6 +60,7 @@ export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
                 value={pass}
                 onChange={onIputChange}
             />}
+            <p className="text-danger">{ errors?.pass }</p>
             <input
                 className="form-control my-3 w-75"
                 placeholder="correo"
@@ -70,6 +69,7 @@ export const FormUsuario = ({ usuarioSeleccionado, controladorCerrarForm }) => {
                 value={correo}
                 onChange={onIputChange}
             />
+            <p className="text-danger">{ errors?.correo }</p>
             <input
                 name="id"
                 type="hidden"

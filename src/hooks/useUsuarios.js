@@ -13,11 +13,18 @@ const initFormUsuario = {
     correo: ''
 }
 
+const initErrors = {
+    usuario: '',
+    pass: '',
+    correo: ''
+}
+
 export const useUsuarios = () => {
 
     const [usuarios, dispatch] = useReducer(usuarioReducer, inicioUsuario)
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(initFormUsuario)
     const [formVisible, setFormVisible] = useState(false)
+    const [errors, setErrors] = useState(initErrors)
     const navigate = useNavigate()
 
     const getUsuarios = async () => {
@@ -37,26 +44,41 @@ export const useUsuarios = () => {
     const controladorAgregarUsuario = async (usuario) => {
 
         let response = null
-        
-        if (usuario.id === 0) {
-            response = await agregarUsuario(usuario)
-        } else {
-            response = await actualizarUsuario(usuario)
+        try {
+            if (usuario.id === 0) {
+                response = await agregarUsuario(usuario)
+            } else {
+                response = await actualizarUsuario(usuario)
+            }
+
+            dispatch({
+                type: (usuario.id === 0) ? 'agregar' : 'actualizar',
+                payload: response.data
+            })
+
+            Swal.fire(
+                (usuario.id === 0) ? 'Usuario Creado' : 'Usuario Actualizado',
+                (usuario.id === 0) ? 'El usuario se creo con exito' : 'El usuario se modifico exitosamente',
+                "success"
+            );
+
+            controladorCerrarForm()
+            navigate('/usuarios')
+
+        } catch (error) {
+            if (error.response.status === 400) {
+                setErrors(error.response.data);
+            } else if (error.response.status === 500 && error.response.data?.message?.includes('constraint')) {
+                if (error.response.data?.message?.includes('UK_usuario')) {
+                    setErrors({ usuario: 'El usuario ya existe' })
+                }
+                if (error.response.data?.message?.includes('UK_correo')) {
+                    setErrors({ correo: 'El correo ya existe' })
+                } 
+            } else {
+                throw error
+            }
         }
-
-        dispatch({
-            type: (usuario.id === 0) ? 'agregar' : 'actualizar',
-            payload: response.data
-        })
-
-        Swal.fire(
-            (usuario.id === 0) ? 'Usuario Creado' : 'Usuario Actualizado',
-            (usuario.id === 0) ? 'El usuario se creo con exito' : 'El usuario se modifico exitosamente',
-            "success"
-        );
-
-        controladorCerrarForm()
-        navigate('/usuarios')
     }
 
     const controladorEliminarUsuario = (id) => {
@@ -100,6 +122,7 @@ export const useUsuarios = () => {
     const controladorCerrarForm = () => {
         setFormVisible(false)
         setUsuarioSeleccionado(initFormUsuario)
+        setErrors({})
     }
 
     return {
@@ -107,6 +130,7 @@ export const useUsuarios = () => {
         usuarioSeleccionado,
         initFormUsuario,
         formVisible,
+        errors,
         controladorAgregarUsuario,
         controladorEliminarUsuario,
         controladorUsuarioSeleccionadoForm,

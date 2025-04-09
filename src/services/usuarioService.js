@@ -19,9 +19,8 @@ export const agregarUsuario = async ({usuario, pass, correo}) => {
             correo
         });
     } catch (error) {
-        console.error(error);
+        throw error
     }
-    return undefined
 }
 
 export const actualizarUsuario = async ({id, usuario, correo}) => {
@@ -31,9 +30,8 @@ export const actualizarUsuario = async ({id, usuario, correo}) => {
             correo
         });
     } catch (error) {
-        console.error(error);
+        throw error
     }
-    return undefined
 }
 
 export const eliminarUsuario = async (id) => {
